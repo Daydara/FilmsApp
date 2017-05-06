@@ -10,6 +10,7 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
+    @reviews = Review.where(movie_id: @movie_id).order("created_at DESC")
   end
 
   # GET /movies/new
@@ -26,7 +27,6 @@ class MoviesController < ApplicationController
   def create
     @movie = current_user.movies.build(movie_params)
     @review.user_id = current_user.id
-
 
     respond_to do |format|
       if @movie.save
